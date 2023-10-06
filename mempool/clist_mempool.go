@@ -297,14 +297,14 @@ func (mem *CListMempool) globalCb(req *abci.Request, res *abci.Response) {
 	switch res.Value.(type) {
 	case *abci.Response_CheckTx:
 		switch req.GetCheckTx().GetType() {
-		case abci.CheckTxType_New:
+		case abci.CHECK_TX_TYPE_CHECK:
 			if mem.recheckCursor != nil {
 				// this should never happen
 				panic("recheck cursor is not nil before resCbFirstTime")
 			}
 			mem.resCbFirstTime(req.GetCheckTx().Tx, res)
 
-		case abci.CheckTxType_Recheck:
+		case abci.CHECK_TX_TYPE_RECHECK:
 			if mem.recheckCursor == nil {
 				return
 			}
